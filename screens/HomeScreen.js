@@ -10,8 +10,8 @@ export default class App extends Component {
     password: "",
     name: "",
     image: null,
-    caption:"",
-    avatar:null
+    caption: "",
+    avatar: null
   }
 
   loginOrRegister = async () => {
@@ -22,7 +22,7 @@ export default class App extends Component {
 
       if (this.state.avatar) {
         avatar = this.state.username
-        await uploadImageAsync("avatar",this.state.avatar, this.state.username)
+        await uploadImageAsync("avatar", this.state.avatar, this.state.username)
       }
 
       const name = this.state.name || this.state.username
@@ -46,14 +46,14 @@ export default class App extends Component {
           // const result = this.state.image && await uploadImageAsync(this.state.image, this.state.username)
           if (this.state.image) {
             avatar = this.state.username
-            await uploadImageAsync("avatar",this.state.avatar, this.state.username)
+            await uploadImageAsync("avatar", this.state.avatar, this.state.username)
             await db.collection("users").doc(this.state.username).update({ avatar })
           }
           await db.collection("users").doc(this.state.username).update({ online: true })
           if (this.state.name) {
-            await db.collection("users").doc(this.state.username).update({ name:this.state.name})
+            await db.collection("users").doc(this.state.username).update({ name: this.state.name })
           }
-         // console.log("image upload: ", result)
+          // console.log("image upload: ", result)
           alert("Login Successful")
         }
         catch (error) {
@@ -79,7 +79,7 @@ export default class App extends Component {
       this.setState({ avatar: result.uri });
     }
   };
-  pickImage=async()=>{
+  pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -88,8 +88,8 @@ export default class App extends Component {
     console.log(result);
 
     if (!result.cancelled) {
-    await uploadImageAsync("images",result.uri,this.state.username)
-    await db.collection("users").doc(this.state.username).update({ caption:this.state.caption })
+      await uploadImageAsync("images", result.uri, this.state.username)
+      await db.collection("users").doc(this.state.username).update({ caption: this.state.caption })
 
     }
   }
@@ -123,11 +123,11 @@ export default class App extends Component {
           secureTextEntry={true}
           style={styles.input}
         />
-          {this.state.image && <Image
+        {this.state.image && <Image
           style={{ width: 80, height: 80 }}
           source={{ uri: this.state.image }}
         />}
- <TextInput
+        <TextInput
           autoCapitalize="none"
           value={this.state.caption}
           onChangeText={(caption) => this.setState({ caption })}
